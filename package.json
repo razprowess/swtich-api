@@ -1,14 +1,24 @@
 {
-  "name": "server",
+  "name": "switch-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "A graphql server for switch",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
-  "author": "",
+  "author": "Abdulrazak Lawal",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1"
+    "apollo-server": "^3.10.0",
+    "apollo-server-errors": "^3.3.1",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^16.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mariadb": "^3.0.0",
+    "sequelize": "^6.21.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
   }
 }
