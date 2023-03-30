@@ -1,9 +1,20 @@
 import { DataTypes, Model } from "sequelize";
+import Accounts from "./account.js";
 import database from "./database.js";
 
 class Mentors extends Model {
     static async getMentor(id) {
         return this.findOne({where: {accountId: id}})
+    }
+
+    static async getMentorBySpeciality(speciality){
+       return this.findAll({
+            where: {speciality : speciality},
+            include: [{
+              model: Accounts,
+                required: true
+            }]
+          })
     }
 }
 
@@ -22,3 +33,4 @@ modelName: 'mentors'
 })
 
 export default Mentors
+
