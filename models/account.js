@@ -25,6 +25,7 @@ Accounts.init({
 })
 
 Accounts.hasOne(Mentors);
+Mentors.belongsTo(Accounts);
 
 export default Accounts;
 

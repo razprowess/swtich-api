@@ -22,6 +22,7 @@ type Mentor {
   experienceinyears: String
   verifyrequest: String
   info: String
+  account: User
   }
 
   input RegisterUserInput {
@@ -48,6 +49,7 @@ type Query {
     Users: [User]!
     User(id: ID): User!
     Tests: Test
+    getMentors(speciality: String): [Mentor]
   }
 
   type Mutation {

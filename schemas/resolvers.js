@@ -7,20 +7,23 @@ const resolvers = {
 Tests: ()=> {
     const obj = {color: "green", size: "big", token: "hello world"}
     return obj;
+},
+
+getMentors: async(_, args)=>{
+const {speciality} = args;
+const result = await MentorsServices.getMentors(speciality);
+return result;
 }
   },
 
   Mutation: {
     registerUser: async (_, args) => {
-      console.log("sign up resolver called");
       return await AccountsServices.registerUser({ ...args.user });
     },
     loginUser: async(_, args)=>{
-        console.log("resolver called");
         return await AccountsServices.loginUser({...args.user});
     },
     registerMentor: async(_, args, context)=>{
-      console.log("mentor resolver called");
        const {id} = context
       const data = {
           user: {...args.user},

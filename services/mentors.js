@@ -9,7 +9,6 @@ class MentorsServices {
       }
 
       const mentor =  await Mentors.getMentor(id);
-      console.log("mentor: ", mentor);
       if(mentor) throw new ApolloError("You already have a mentor account");
 
     const response = await Mentors.create({...user, account_id:id});
@@ -17,6 +16,17 @@ class MentorsServices {
       throw new ApolloError("failed to register a mentor", "404");
     }
     return response;
+  }
+
+  static async getMentors(speciality){
+   const mentor = await Mentors.getMentorBySpeciality(speciality);
+if(!mentor){
+  throw new ApolloError('Failed to fetch mentor list');
+}
+   if(mentor){
+    return mentor
+   }
+   return [];
   }
 }
 
