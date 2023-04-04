@@ -1,14 +1,10 @@
 import AccountsServices from "../services/accounts.js";
+import FollowersServices from "../services/followers.js";
 import MentorsServices from "../services/mentors.js";
 
 
 const resolvers = {
   Query: {
-Tests: ()=> {
-    const obj = {color: "green", size: "big", token: "hello world"}
-    return obj;
-},
-
 getMentors: async(_, args)=>{
 const {speciality} = args;
 const result = await MentorsServices.getMentors(speciality);
@@ -30,7 +26,19 @@ return result;
           id
       }
        return await MentorsServices.registerMentor(data);
-      
+    },
+    createFollower: async(_, args, context)=>{
+      const {id} = context;
+      const {mentorId} = args
+      const data = {id, mentorId: +mentorId};
+       return await FollowersServices.registerFollower(data);
+    },
+
+    removeFollower: async(_, args, context)=>{
+      const {id} = context;
+      const {mentorId} = args
+      const data = {id, mentorId: +mentorId};
+        return await FollowersServices.removeFollower(data);
     }
   },
 };
