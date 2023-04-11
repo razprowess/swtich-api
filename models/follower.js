@@ -17,7 +17,6 @@ Followers.init({
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
     mentor_id: {field: "mentor_id", type: DataTypes.INTEGER },
     status: {type: DataTypes.STRING},
-    togglerequest: {type: DataTypes.BOOLEAN},
     menteeid: {type: DataTypes.INTEGER},
     createdAt: {field: "created_at", type: DataTypes.DATE},
     updatedAt: {field: "updated_at", type: DataTypes.DATE}

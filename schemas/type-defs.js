@@ -25,7 +25,6 @@ type Follower {
 status: String
 mentor_id: Int
 menteeid: ID
-togglerequest: Boolean
 }
 
 
