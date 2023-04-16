@@ -14,9 +14,8 @@ class AccountsServices {
     
     const match = await bcrypt.compare(password, oldUser.password);
     if (match) {
-        // console.log("there is a match");
       const token = await jwt.sign(
-        { id: oldUser.id, email: oldUser.email },
+        { id: oldUser.id, email: oldUser.email, username: oldUser.username, role: oldUser.role },
         TOKEN_SECRET,
         { expiresIn: "1y", algorithm: "HS256" }
       );
@@ -33,6 +32,7 @@ class AccountsServices {
     email,
     password,
     profession,
+    username,
   }) {
     
     const oldUser = await AccountModel.getUser(email);
@@ -40,11 +40,19 @@ class AccountsServices {
     if (oldUser) {
       throw new ApolloError("user already exist", "405");
     }
+
+    const usernameCheck = await AccountModel.getUserByUsername(username);
+    if(usernameCheck){
+        throw new ApolloError("username already exist", "405");
+    }
+
     const encryptedPassword = await bcrypt.hash(password, 10);
     const userid = await bcrypt.hash(email, 10);
+    const role = 'mentee';
     const newUser = await AccountModel.create({
       firstname,
       lastname,
+      username,
       profession,
       email,
       password: encryptedPassword,
@@ -52,15 +60,23 @@ class AccountsServices {
     });
     if (newUser) {
         const token = await jwt.sign(
-            { id: newUser.id, email: newUser.email },
+            { id: newUser.id, email: newUser.email, username: newUser.username, role: newUser.role },
             TOKEN_SECRET,
             { expiresIn: "1y", algorithm: "HS256" }
           );
           newUser.token = token;
       return newUser;
     } else {
-      throw new ApolloError("Could not creat an create account", "500");
+      throw new ApolloError("Could not create an create account", "500");
     }
+  }
+
+  static async getProfileInfo(id){
+    const result = await AccountModel.getProfileData(id);
+    if(result){
+      return result;
+    }
+    throw new ApolloError("User not found", "404");
   }
 }
 

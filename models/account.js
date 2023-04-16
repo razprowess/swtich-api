@@ -6,6 +6,15 @@ class Accounts extends Model {
     static async getUser(email){
         return this.findOne({where: { email }})
     }
+
+    static async getUserByUsername(username){
+        return this.findOne({where: { username }})
+    }
+    
+    static async getProfileData(id){
+        return this.findOne({where: {id}, 
+            include: {model: Mentors, required: true}});
+    }
 }
 
 
@@ -13,6 +22,8 @@ Accounts.init({
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
     firstname: {type: DataTypes.STRING},
     lastname: {type:DataTypes.STRING},
+    username: {type:DataTypes.STRING},
+    role: {type:DataTypes.STRING, defaultValue: 'mentee'},
     profession: {type: DataTypes.STRING},    
     password: {type: DataTypes.STRING},
     email: {type: DataTypes.STRING},
