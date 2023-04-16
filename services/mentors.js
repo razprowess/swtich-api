@@ -18,8 +18,8 @@ class MentorsServices {
     return response;
   }
 
-  static async getMentors(speciality){
-   const mentor = await Mentors.getMentorBySpeciality(speciality);
+  static async getMentors(speciality, id){
+   const mentor = await Mentors.getMentorBySpeciality(speciality, id);
 if(!mentor){
   throw new ApolloError('Failed to fetch mentor list');
 }
@@ -27,6 +27,14 @@ if(!mentor){
     return mentor
    }
    return [];
+  }
+
+  static async getFollowers(id){
+    const result = await Mentors.getFollowers(id);
+    if(!result){
+      throw new ApolloError('Failed to fetch mentor list', '404');
+    }
+    return result;
   }
 }
 

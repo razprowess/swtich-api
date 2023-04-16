@@ -1,14 +1,15 @@
 import { gql } from "apollo-server";
 
 const typeDefs = gql`
-  type User {
-    id: ID
-    firstname: String
-    lastname: String
-    email: String
-    password: String
-    profession: String
-    token: String
+type User {
+  id: ID
+  firstname: String
+  lastname: String
+  username: String
+  email: String
+  password: String
+  profession: String
+  token: String
   }
 
 type Mentor { 
@@ -17,9 +18,17 @@ type Mentor {
   experienceinyears: String
   verifyrequest: String
   info: String
+  }
+
+type SearchResult {
+  id: ID
+  speciality: String
+  experienceinyears: String
+  verifyrequest: String
+  info: String
   account: User
   followers: [Follower]
-  }
+}
 
 type Follower {
 status: String
@@ -27,10 +36,21 @@ mentor_id: Int
 menteeid: ID
 }
 
+type Profile {
+  id: ID
+  firstname: String
+  lastname: String
+  email: String
+  password: String
+  profession: String
+  token: String
+  mentor: SearchResult
+  }
 
   input RegisterUserInput {
     firstname: String!
     lastname: String!
+    username: String!
     email: String!
     password: String!
     profession: String!
@@ -51,8 +71,10 @@ menteeid: ID
 type Query {
     Users: [User]!
     User(id: ID): User!
-    getMentors(speciality: String): [Mentor]
-    getFollower(id: ID): Follower
+    getMentors(speciality: String): [SearchResult]
+    getProfileInfo(username: String): Profile
+    getFollowers(username: String): [Follower]
+    getFollowings(username: String): [Follower]
   }
 
   type Mutation {

@@ -8,7 +8,7 @@ class Mentors extends Model {
     return this.findOne({ where: { accountId: id } });
   }
 
-  static async getMentorBySpeciality(speciality) {
+  static async getMentorBySpeciality(speciality, id) {
     return this.findAll({
       where: { speciality: speciality },
       include: [
@@ -18,12 +18,22 @@ class Mentors extends Model {
         },
         {
           model: Followers,
+          where: {menteeid: id},
           required: false,
         },
       ],
     });
   }
+
+  static async getFollowers(id){
+    const mentor = await this.findOne({where: {accountId: id}})
+    if(mentor){
+      const result = await Followers.findAll({where: {mentor_id: mentor.id}})
+      return result;
+    }
+    }
 }
+
 
 Mentors.init(
   {
