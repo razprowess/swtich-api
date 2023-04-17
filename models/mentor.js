@@ -31,6 +31,7 @@ class Mentors extends Model {
       const result = await Followers.findAll({where: {mentor_id: mentor.id}})
       return result;
     }
+    return [];
     }
 }
 

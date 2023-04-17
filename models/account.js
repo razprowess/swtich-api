@@ -13,7 +13,7 @@ class Accounts extends Model {
     
     static async getProfileData(id){
         return this.findOne({where: {id}, 
-            include: {model: Mentors, required: true}});
+            include: {model: Mentors, required: false}});
     }
 }
 
