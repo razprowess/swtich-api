@@ -12,6 +12,14 @@ class FollowersServices {
     return response;
   }
 
+  static async registerFollowerByUsername(data) {
+     const response = await FollowerModel.createFollowerByUsername(data);
+    if (!response) {
+      throw new ApolloError("failed to create a follower", "404");
+    }
+    return response;
+  }
+  
   static async removeFollower(data){
     const response = await FollowerModel.deleteFollower(data);
     if(!response){

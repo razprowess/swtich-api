@@ -82,6 +82,7 @@ type Query {
     loginUser(user: LoginInput): User!
     registerMentor(user: MentorInput): Mentor
     createFollower(mentorId: ID): Follower
+    createFollowerByUsername(username: String): Follower
     removeFollower(mentorId: ID): Int
   }
 `;

@@ -1,10 +1,24 @@
 import { Model, DataTypes } from "sequelize";
 import database from "./database.js";
 import Accounts from "./account.js";
+import Mentors from "./mentor.js";
 
 class Followers extends Model {
   static async createFollower(data) {
     return this.create({ ...data });
+  }
+
+  static async createFollowerByUsername(data) {
+    const {id, username} = data;
+    const user = await Accounts.findOne({where: {username}});
+    if(user){
+      const mentor = await Mentors.findOne({where: {accountId: user.id}});
+      if(mentor){
+        const params = {mentor_id: mentor.id, status: 'pending', menteeid: id};
+        return this.create({ ...params });
+      }
+    } 
+
   }
 
   static async deleteFollower(data) {

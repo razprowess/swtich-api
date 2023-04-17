@@ -69,6 +69,13 @@ const resolvers = {
       return await FollowersServices.registerFollower(data);
     },
 
+    createFollowerByUsername: async (_, args, context)=>{
+      const {id} = context;
+      const {username} = args;
+      const data = {id, username};
+      FollowersServices.registerFollowerByUsername(data);
+    },
+
     removeFollower: async (_, args, context) => {
       const { id } = context;
       const { mentorId } = args;
