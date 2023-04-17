@@ -27,6 +27,14 @@ class FollowersServices {
     }
     return response;
   }
+
+  static async getFollowingsByUsername(username){
+    const response = await FollowerModel.getFollowingsByUsername(username);
+    if(!response){
+      throw new ApolloError('Fail to retrieve following data', '404');
+    }
+    return response;
+  }
 }
 
 export default FollowersServices;

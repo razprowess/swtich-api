@@ -26,7 +26,12 @@ const resolvers = {
 
     getFollowings: async (_, args, context) => {
       const { id } = context;
-      const result = FollowersServices.getFollowings(id);
+      const {username} = args;
+      if(username){
+        const result = await FollowersServices.getFollowingsByUsername(username);
+        return result;  
+      }
+      const result = await FollowersServices.getFollowings(id);
       return result;
     },
   },

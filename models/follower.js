@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import database from "./database.js";
-import Mentors from "./mentor.js";
+import Accounts from "./account.js";
 
 class Followers extends Model {
   static async createFollower(data) {
@@ -14,6 +14,14 @@ class Followers extends Model {
 
   static async getFollowings(id) {
     return this.findAll({ where: { menteeid: id } });
+  }
+
+  static async getFollowingsByUsername(username){
+    const user = await Accounts.findOne({where: {username}});
+    if(user){
+      const result = await this.findAll({where: {menteeid: user.id}});
+      return result;
+    }
   }
 }
 
