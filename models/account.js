@@ -15,6 +15,12 @@ class Accounts extends Model {
         return this.findOne({where: {id}, 
             include: {model: Mentors, required: false}});
     }
+
+    static async getProfileInfoByUsername(username){
+        return this.findOne({where: {username}, 
+            include: {model: Mentors, required: false}});
+    }
+    
 }
 
 

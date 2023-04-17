@@ -13,6 +13,11 @@ const resolvers = {
 
     getProfileInfo: async (_, args, context) => {
       const { id } = context;
+      const { username } = args;
+      if(username){
+        const response = await AccountsServices.getProfileInfoByUsername(username);
+        return response;
+      }
       const result = AccountsServices.getProfileInfo(id);
       return result;
     },

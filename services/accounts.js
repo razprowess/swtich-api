@@ -73,11 +73,20 @@ class AccountsServices {
 
   static async getProfileInfo(id){
     const result = await AccountModel.getProfileData(id);
-    if(result){
-      return result;
-    }
-    throw new ApolloError("User not found", "404");
+    if(!result){
+      throw new ApolloError("User not found", "404");      
+     }
+     return result;
   }
+  static async getProfileInfoByUsername(username){
+    const result = await AccountModel.getProfileInfoByUsername(username);
+    if(!result){
+     throw new ApolloError("User not found", "404");      
+    }
+    return result;
+
+  }
+  
 }
 
 export default AccountsServices;
