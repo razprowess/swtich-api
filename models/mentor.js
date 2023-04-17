@@ -33,6 +33,20 @@ class Mentors extends Model {
     }
     return [];
     }
+
+    static async getFollowersByUsername(username){
+      const user = await Accounts.findOne({where: {username}});
+      if(user){
+        const mentor = await this.findOne({where: {accountId: user.id}})
+        if(mentor){
+          const result = await Followers.findAll({where: {mentor_id: mentor.id}})
+          return result;
+        }
+        return [];
+      }
+      
+      }
+    
 }
 
 

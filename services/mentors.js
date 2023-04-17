@@ -36,6 +36,15 @@ if(!mentor){
     }
     return result;
   }
+
+  static async   getFollowersByUsername(username){
+    const result = await Mentors.getFollowersByUsername(username);
+    if(!result){
+      throw new ApolloError('Failed to fetch mentor list', '404');
+    }
+    return result;
+  }
+
 }
 
 export default MentorsServices;

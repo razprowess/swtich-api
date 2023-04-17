@@ -13,23 +13,29 @@ const resolvers = {
 
     getProfileInfo: async (_, args, context) => {
       const { id } = context;
-        const result = AccountsServices.getProfileInfo(id);
-        return result;
-    
+      const result = AccountsServices.getProfileInfo(id);
+      return result;
     },
 
     getFollowers: async (_, args, context) => {
       const { id } = context;
+      const { username } = args;
+      if (username) {
+        const response = await MentorsServices.getFollowersByUsername(username);
+        return response;
+      }
       const result = MentorsServices.getFollowers(id);
       return result;
     },
 
     getFollowings: async (_, args, context) => {
       const { id } = context;
-      const {username} = args;
-      if(username){
-        const result = await FollowersServices.getFollowingsByUsername(username);
-        return result;  
+      const { username } = args;
+      if (username) {
+        const result = await FollowersServices.getFollowingsByUsername(
+          username
+        );
+        return result;
       }
       const result = await FollowersServices.getFollowings(id);
       return result;
