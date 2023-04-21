@@ -11,7 +11,7 @@ class MentorsServices {
       const mentor =  await Mentors.getMentor(id);
       if(mentor) throw new ApolloError("You already have a mentor account");
 
-    const response = await Mentors.create({...user, account_id:id});
+    const response = await Mentors.createMentor(user, id);
     if (!response) {
       throw new ApolloError("failed to register a mentor", "404");
     }

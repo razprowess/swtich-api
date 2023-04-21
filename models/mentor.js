@@ -4,6 +4,14 @@ import database from "./database.js";
 import Followers from "./follower.js";
 
 class Mentors extends Model {
+  static async createMentor(user, id){
+    const res = await this.create({...user, accountId:id});
+    if(res){
+      Accounts.update({role: 'mentor'}, {where: {id}})
+    }
+    return res;
+  }
+
   static async getMentor(id) {
     return this.findOne({ where: { accountId: id } });
   }
