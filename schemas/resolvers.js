@@ -82,6 +82,11 @@ const resolvers = {
       const data = { id, mentorId: +mentorId };
       return await FollowersServices.removeFollower(data);
     },
+
+    updateProfile: async (_, args, context) =>{
+      const {id, username} = context;
+      return AccountsServices.updateProfile({...args.user, id, username});  
+    }
   },
 };
 

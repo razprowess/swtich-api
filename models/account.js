@@ -20,7 +20,16 @@ class Accounts extends Model {
         return this.findOne({where: {username}, 
             include: {model: Mentors, required: false}});
     }
-    
+
+    static async updateProfile(user){
+        let res;
+        const {firstname, lastname, username, info, experienceinyears, bio, speciality, imgurl, id} = user;
+    const response =  await this.update({firstname, lastname, bio, imgurl},{where: {username}});
+    if(speciality){
+       res =  await Mentors.update({info, speciality, experienceinyears}, {where: { accountId: id }});
+    }
+    return response[0] && res[0];
+    }
 }
 
 
@@ -34,6 +43,8 @@ Accounts.init({
     password: {type: DataTypes.STRING},
     email: {type: DataTypes.STRING},
     userid: {type: DataTypes.STRING},
+    imgurl: {type: DataTypes.STRING},
+    bio: {type: DataTypes.STRING},
     createdAt: {field: "created_at", type: DataTypes.DATE},
     updatedAt: {field: "updated_at", type: DataTypes.DATE}
 },{
