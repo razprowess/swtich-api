@@ -4,6 +4,14 @@ import database from "./database.js";
 import Followers from "./follower.js";
 
 class Mentors extends Model {
+  static async createMentor(user, id){
+    const res = await this.create({...user, accountId:id});
+    if(res){
+      Accounts.update({role: 'mentor'}, {where: {id}})
+    }
+    return res;
+  }
+
   static async getMentor(id) {
     return this.findOne({ where: { accountId: id } });
   }
@@ -31,7 +39,22 @@ class Mentors extends Model {
       const result = await Followers.findAll({where: {mentor_id: mentor.id}})
       return result;
     }
+    return [];
     }
+
+    static async getFollowersByUsername(username){
+      const user = await Accounts.findOne({where: {username}});
+      if(user){
+        const mentor = await this.findOne({where: {accountId: user.id}})
+        if(mentor){
+          const result = await Followers.findAll({where: {mentor_id: mentor.id}})
+          return result;
+        }
+        return [];
+      }
+      
+      }
+    
 }
 
 

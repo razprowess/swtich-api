@@ -40,10 +40,13 @@ type Profile {
   id: ID
   firstname: String
   lastname: String
+  username: String
   email: String
+  imgurl: String
   password: String
   profession: String
   token: String
+  bio: String
   mentor: SearchResult
   }
 
@@ -54,6 +57,16 @@ type Profile {
     email: String!
     password: String!
     profession: String!
+  }
+
+  input UpdateProfileInput {
+    firstname: String!
+    lastname: String!
+    speciality: String!
+    experienceinyears: String!
+    info: String
+    imgurl: String
+    bio: String
   }
 
   input LoginInput {
@@ -82,7 +95,9 @@ type Query {
     loginUser(user: LoginInput): User!
     registerMentor(user: MentorInput): Mentor
     createFollower(mentorId: ID): Follower
+    createFollowerByUsername(username: String): Follower
     removeFollower(mentorId: ID): Int
+    updateProfile(user: UpdateProfileInput): Boolean
   }
 `;
 export default typeDefs;

@@ -11,7 +11,6 @@ class AccountsServices {
     if (!oldUser) {
       throw new ApolloError("Invalid login credentials");
     }
-    
     const match = await bcrypt.compare(password, oldUser.password);
     if (match) {
       const token = await jwt.sign(
@@ -73,10 +72,26 @@ class AccountsServices {
 
   static async getProfileInfo(id){
     const result = await AccountModel.getProfileData(id);
-    if(result){
-      return result;
+    if(!result){
+      throw new ApolloError("User not found", "404");      
+     }
+     return result;
+  }
+  static async getProfileInfoByUsername(username){
+    const result = await AccountModel.getProfileInfoByUsername(username);
+    if(!result){
+     throw new ApolloError("User not found", "404");      
     }
-    throw new ApolloError("User not found", "404");
+    return result;
+
+  }
+  
+  static async updateProfile(user){
+    const result = await AccountModel.updateProfile(user);
+    if(!result){
+      throw new ApolloError('Unable to update profile', '404');
+    }
+    return result;
   }
 }
 
